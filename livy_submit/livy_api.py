@@ -10,6 +10,7 @@ class Batch:
         self.name = name
         self.appId = appId
         self.owner = owner
+        self.proxyUser = proxyUser
         self.log = log
         self.state = state
         self.appInfo = appInfo
@@ -21,6 +22,7 @@ class Batch:
             and self.name == other.name
             and self.appId == other.appId
             and self.owner == other.owner
+            and self.proxyUser = other.proxyUser
             and self.state == other.state
             and self.appInfo == other.appInfo
         )
@@ -33,7 +35,7 @@ class Batch:
                 # return a fully quoted string in the repr
                 return f"'{value}'"
 
-        return f"Batch(id={self.id}, name={_as_none(self.name)}, owner='{self.owner}, appId={_as_none(self.appId)}, appInfo={self.appInfo}, log='', state='{self.state}')"
+        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, , owner='{self.owner}, proxyUser='{self.proxyUser}, appInfo={self.appInfo}, log='', state='{self.state}')"
 
 
 class LivyAPI:
