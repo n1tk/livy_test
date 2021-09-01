@@ -145,7 +145,7 @@ class LivyAPI:
         response = self._request("get", url)
         return response["id"], response["owner"]
 
-   def proxyUser(self, batch_id: int) -> Tuple[int, str]:
+    def proxyUser(self, batch_id: int) -> Tuple[int, str]:
         """Returns the state of batch session.
 
         Handles: GET /batches/{batchId}/state
