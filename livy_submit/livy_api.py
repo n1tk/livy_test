@@ -161,9 +161,7 @@ class LivyAPI:
         args: List[str] = None,
         pyFiles: List[str] = None,
         files: List[str] = None,
-        jars: List[str] = None,
-        proxyUser: str = None,
-        ClassName: str = None
+        jars: List[str] = None
     ) -> Batch:
         """
         Submit a batch job to the Livy server

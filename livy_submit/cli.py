@@ -265,14 +265,13 @@ def _livy_submit_func(
     executorCores: int = None,
     numExecutors: int = None,
     archives: List[str] = None,
+    owner: str = None,
     queue: str = None,
     conf: dict = None,
     args: List[str] = None,
     pyFiles: List[str] = None,
     files: List[str] = None,
     jars: List[str] = None,
-    proxyUser: str = None,
-    ClassName: str = None,
     **kwargs
 ):
     if conf is None:
@@ -382,6 +381,7 @@ def _livy_submit_func(
         "numExecutors": numExecutors,
         "archives": archives,
         "queue": queue,
+        "owner": owner,
         "conf": conf,
         "args": args,
         "pyFiles": pyFiles,
