@@ -155,6 +155,7 @@ class LivyAPI:
         executorCores: int = None,
         numExecutors: int = None,
         archives: List[str] = None,
+        owner: str = None,
         queue: str = None,
         conf: dict = None,
         args: List[str] = None,
