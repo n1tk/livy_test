@@ -5,7 +5,7 @@ from typing import List, Tuple
 
 
 class Batch:
-    def __init__(self, id: str, name: str, appId: str, owner: str, log: List, state: str, appInfo: dict):
+    def __init__(self, id: str, name: str, appId: str, owner: str, proxyUser:str, log: List, state: str, appInfo: dict):
         self.id = id
         self.name = name
         self.appId = appId
