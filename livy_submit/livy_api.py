@@ -22,7 +22,7 @@ class Batch:
             and self.name == other.name
             and self.appId == other.appId
             and self.owner == other.owner
-            and self.proxyUser = other.proxyUser
+            and self.proxyUser == other.proxyUser
             and self.state == other.state
             and self.appInfo == other.appInfo
         )
