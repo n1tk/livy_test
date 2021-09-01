@@ -148,6 +148,9 @@ class LivyAPI:
     def submit(
         self,
         file: str,
+        proxyUser: str,
+        proxyUser: str = None,
+        kind: str = None,
         name: str = None,
         driverMemory: str = None,
         driverCores: int = None,

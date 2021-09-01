@@ -258,6 +258,8 @@ def _livy_submit_func(
     livy_url: str,
     namenode_url: str,
     file: str,
+    proxyUser: str = None,
+    kind: str = None,
     name: str = None,
     driverMemory: str = None,
     driverCores: int = None,
