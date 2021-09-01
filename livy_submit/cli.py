@@ -265,11 +265,14 @@ def _livy_submit_func(
     executorCores: int = None,
     numExecutors: int = None,
     archives: List[str] = None,
-    conda_env: str = None,
     queue: str = None,
-    conf: Dict = None,
+    conf: dict = None,
     args: List[str] = None,
     pyFiles: List[str] = None,
+    files: List[str] = None,
+    jars: List[str] = None,
+    proxyUser: str = None,
+    ClassName: str = None,
     **kwargs
 ):
     if conf is None:
