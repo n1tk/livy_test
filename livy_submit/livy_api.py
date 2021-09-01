@@ -145,6 +145,25 @@ class LivyAPI:
         response = self._request("get", url)
         return response["id"], response["owner"]
 
+   def proxyUser(self, batch_id: int) -> Tuple[int, str]:
+        """Returns the state of batch session.
+
+        Handles: GET /batches/{batchId}/state
+
+        Parameters
+        ----------
+        batch_id: The ID of the livy /batches job.
+
+        Returns
+        -------
+        int: Batch session id
+        str: The current proxyUser of batch session
+        """
+        url = "%s/%s/proxyUser" % (self._base_url, batch_id)
+        response = self._request("get", url)
+        return response["id"], response["proxyUser"]
+
+
     def submit(
         self,
         file: str,
