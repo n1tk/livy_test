@@ -5,22 +5,24 @@ from typing import List, Tuple
 
 
 class Batch:
-    def __init__(self, id: str, name: str, appId: str, appInfo: dict, log: List, state: str):
+    def __init__(self, id: str, name: str, appId: str, owner: str, log: List, state: str, appInfo: dict):
         self.id = id
+        self.name = name
         self.appId = appId
-        self.appInfo = appInfo
+        self.owner = owner
         self.log = log
         self.state = state
-        self.name = name
+        self.appInfo = appInfo
 
     def __eq__(self, other):
         """Make an equality comparison ignoring the logs"""
         return (
             self.id == other.id
-            and self.appId == other.appId
-            and self.appInfo == other.appInfo
-            and self.state == other.state
             and self.name == other.name
+            and self.appId == other.appId
+            and self.owner == other.owner
+            and self.state == other.state
+            and self.appInfo == other.appInfo
         )
 
     def __repr__(self):
@@ -31,7 +33,7 @@ class Batch:
                 # return a fully quoted string in the repr
                 return f"'{value}'"
 
-        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, appInfo={self.appInfo}, log='', state='{self.state}')"
+        return f"Batch(id={self.id}, name={_as_none(self.name)}, owner='{self.owner}, appId={_as_none(self.appId)}, appInfo={self.appInfo}, log='', state='{self.state}')"
 
 
 class LivyAPI:
@@ -124,6 +126,24 @@ class LivyAPI:
         url = "%s/%s/state" % (self._base_url, batch_id)
         response = self._request("get", url)
         return response["id"], response["state"]
+
+    def owner(self, batch_id: int) -> Tuple[int, str]:
+        """Returns the state of batch session.
+
+        Handles: GET /batches/{batchId}/state
+
+        Parameters
+        ----------
+        batch_id: The ID of the livy /batches job.
+
+        Returns
+        -------
+        int: Batch session id
+        str: The current owner of batch session
+        """
+        url = "%s/%s/owner" % (self._base_url, batch_id)
+        response = self._request("get", url)
+        return response["id"], response["owner"]
 
     def submit(
         self,
