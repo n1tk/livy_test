@@ -259,7 +259,6 @@ def _livy_submit_func(
     namenode_url: str,
     file: str,
     proxyUser: str = None,
-    kind: str = None,
     name: str = None,
     driverMemory: str = None,
     driverCores: int = None,
@@ -272,8 +271,6 @@ def _livy_submit_func(
     conf: dict = None,
     args: List[str] = None,
     pyFiles: List[str] = None,
-    files: List[str] = None,
-    jars: List[str] = None,
     **kwargs
 ):
     if conf is None:

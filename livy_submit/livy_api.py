@@ -35,7 +35,7 @@ class Batch:
                 # return a fully quoted string in the repr
                 return f"'{value}'"
 
-        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, , owner='{self.owner}, proxyUser='{self.proxyUser}, appInfo={self.appInfo}, log='', state='{self.state}')"
+        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, owner='{self.owner}, proxyUser='{self.proxyUser}, appInfo={self.appInfo}, log='', state='{self.state}')"
 
 
 class LivyAPI:
@@ -170,7 +170,6 @@ class LivyAPI:
         self,
         file: str,
         proxyUser: str = None,
-        kind: str = None,
         name: str = None,
         driverMemory: str = None,
         driverCores: int = None,
@@ -183,8 +182,7 @@ class LivyAPI:
         conf: dict = None,
         args: List[str] = None,
         pyFiles: List[str] = None,
-        files: List[str] = None,
-        jars: List[str] = None
+        **kwargs
     ) -> Batch:
         """
         Submit a batch job to the Livy server
