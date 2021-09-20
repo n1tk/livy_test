@@ -9,6 +9,8 @@ class Batch:
         self.id = id
         self.name = name
         self.appId = appId
+        self.owner = owner
+        self.proxyUser = proxyUser
         self.log = log
         self.state = state
         self.appInfo = appInfo
@@ -19,6 +21,8 @@ class Batch:
             self.id == other.id
             and self.name == other.name
             and self.appId == other.appId
+            and self.owner == other.owner
+            and self.proxyUser == other.proxyUser
             and self.state == other.state
             and self.appInfo == other.appInfo
         )
@@ -31,7 +35,7 @@ class Batch:
                 # return a fully quoted string in the repr
                 return f"'{value}'"
 
-        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, appInfo={self.appInfo}, log='', state='{self.state}')"
+        return f"Batch(id={self.id}, name={_as_none(self.name)}, appId={_as_none(self.appId)}, owner={_as_none(self.owner)}, proxyUser={_as_none(self.proxyUser)}, appInfo={self.appInfo}, log='', state={self.state})"
 
 
 class LivyAPI:
@@ -66,7 +70,7 @@ class LivyAPI:
             headers = {"Content-Type": "application/json"}
 
         self._headers = headers
-
+        
     def all_info(
         self, from_index: int = None, size: int = None
     ) -> Tuple[int, int, List[Batch]]:
@@ -97,7 +101,7 @@ class LivyAPI:
         response = self._request("get", self._base_url, data=data)
         info = {batch["id"]: Batch(**batch) for batch in response["sessions"]}
         return response["from"], response["total"], info
-
+    
     def info(self, batch_id: int) -> Batch:
         """Returns the batch session information.
 
@@ -125,7 +129,7 @@ class LivyAPI:
         response = self._request("get", url)
         return response["id"], response["state"]
 
-    '''
+    
     def owner(self, batch_id: int) -> Tuple[int, str]:
         """Returns the state of batch session.
 
@@ -161,12 +165,10 @@ class LivyAPI:
         url = "%s/%s/proxyUser" % (self._base_url, batch_id)
         response = self._request("get", url)
         return response["id"], response["proxyUser"]
-    '''
 
     def submit(
         self,
         file: str,
-        proxyUser: str = None,
         name: str = None,
         driverMemory: str = None,
         driverCores: int = None,
@@ -174,12 +176,15 @@ class LivyAPI:
         executorCores: int = None,
         numExecutors: int = None,
         archives: List[str] = None,
-        owner: str = None,
         queue: str = None,
         conf: dict = None,
         args: List[str] = None,
         pyFiles: List[str] = None,
-        **kwargs
+        auth: Auth = None,
+        verify: Verify = True,
+        proxy_user: str = None,
+        files: List[str] = None,
+        jars: List[str] = None
     ) -> Batch:
         """
         Submit a batch job to the Livy server
@@ -247,7 +252,7 @@ class LivyAPI:
             if val is None or var == "self":
                 continue
             data[var] = val
-        #         print(data)
+
 
         # check for collision with existing batch name
         if name is not None:
