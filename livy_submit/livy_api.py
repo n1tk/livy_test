@@ -180,9 +180,6 @@ class LivyAPI:
         conf: dict = None,
         args: List[str] = None,
         pyFiles: List[str] = None,
-        auth: Auth = None,
-        verify: Verify = True,
-        proxy_user: str = None,
         files: List[str] = None,
         jars: List[str] = None
     ) -> Batch:
